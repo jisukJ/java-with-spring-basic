@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost/test2?serverTimezone=Asia/Seoul"/>
+        <property name="username" value="root"/>
+        <property name="password" value="1380plqa"/>
+    </bean>
+
+    <bean id="userService" class="UserService">
+        <property name="userDao" ref="userDao"/>
+        <property name="userLevelUpgradePolicy" ref="userLevelUpgradePolicy"/>
+        <property name="transactionManager" ref="transactionManager"/>
+        <property name="mailSender" ref="mailSender"/>
+    </bean>
+
+    <bean id="userDao" class="UserDaoJdbc">
+        <property name="jdbcTemplate" ref="dataSource"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="userLevelUpgradePolicy" class="BasicUserLevelUpgradePolicy"/>
+
+    <bean id="mailSender" class="DummyMailSender"/>
+
+</beans>
