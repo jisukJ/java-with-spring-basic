@@ -11,10 +11,14 @@
         <property name="password" value="1380plqa"/>
     </bean>
 
-    <bean id="userService" class="UserService">
+    <bean id="userService" class="UserServiceTx">
+        <property name="transactionManager" ref="transactionManager"/>
+        <property name="userService" ref="userServiceImpl"/>
+    </bean>
+
+    <bean id="userServiceImpl" class="UserServiceImpl">
         <property name="userDao" ref="userDao"/>
         <property name="userLevelUpgradePolicy" ref="userLevelUpgradePolicy"/>
-        <property name="transactionManager" ref="transactionManager"/>
         <property name="mailSender" ref="mailSender"/>
     </bean>
 
