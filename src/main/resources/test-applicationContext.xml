@@ -11,9 +11,11 @@
         <property name="password" value="1380plqa"/>
     </bean>
 
-    <bean id="userService" class="UserServiceTx">
+    <bean id="userService" class="TxProxyFactoryBean">
+        <property name="target" ref="userServiceImpl"/>
         <property name="transactionManager" ref="transactionManager"/>
-        <property name="userService" ref="userServiceImpl"/>
+        <property name="serviceInterface" value="UserService"/>
+        <property name="pattern" value="upgradeLevels"/>
     </bean>
 
     <bean id="userServiceImpl" class="UserServiceImpl">
